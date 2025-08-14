@@ -2,6 +2,16 @@
 GET http://localhost:3000/tasks
 Accept: application/json
 
+### empty post body on create
+POST http://localhost:3000/tasks
+Accept: application/json
+Content-Type: application/json
+
+{
+  "title": "a",
+  "description": ""
+}
+
 ###
 POST http://localhost:3000/tasks
 Accept: application/json
