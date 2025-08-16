@@ -8,7 +8,7 @@ import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
 
 @Controller('tasks')
 export class TasksController {
-  constructor(private taskService: TasksService) { }
+  constructor(private taskService: TasksService) {}
 
   @Get()
   getTasks(@Query() filterDto: GetTasksFilterDto): Task[] {
