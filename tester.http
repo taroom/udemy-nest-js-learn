@@ -43,11 +43,22 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/tasks/b4988d37-85e6-41a1-a9ae-629ea1be0d5c
+GET http://localhost:3000/tasks/a1892a3b-4878-477a-a75b-fddc0c3f69f5
 Accept: application/json
 
+
 ###
-PATCH http://localhost:3000/tasks/765477cc-93a9-456e-b21b-e96784399a55/status
+PUT http://localhost:3000/tasks/bfe5571e-301d-4ebe-93a4-d8007d75d6b5
+Accept: application/json
+Content-Type: application/json
+
+{
+  "title": "Update",
+  "description": "Mengerjakan berbagai hidup pekerjaan update"
+}
+
+###
+PATCH http://localhost:3000/tasks/bfe5571e-301d-4ebe-93a4-d8007d75d6b5/status
 Accept: application/json
 Content-Type: application/json
 
@@ -56,10 +67,10 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:3000/tasks/1ee0a81d-130f-4a40-b0e8-055f1d57de85
+DELETE http://localhost:3000/tasks/dcc9ebbb-53da-440c-a137-b70b1ad43950
 Accept: application/json
 
 
 ### with filter
-GET http://localhost:3000/tasks?status=DONE&search=s
+GET http://localhost:3000/tasks?status=DONE&search=sekolah
 Accept: application/json
