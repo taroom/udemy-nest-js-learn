@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Task, TaskStatus } from './tasks.model';
 import { v4 as uuid } from 'uuid';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -47,7 +47,12 @@ export class TasksService {
   }
 
   viewTask(id: string): Task {
-    return this.tasks.find((task) => task.id === id);
+    // mencoba mendapatkan tugas
+    const found = this.tasks.find((task) => task.id === id);
+    // jika tidak ada maka lemparkan exception 404
+    if (!found) throw new NotFoundException(`Tidak ditemukan tugas dengan id: "${id}" `);
+
+    return found;
   }
 
   updateTask(updateTaskDto: UpdateTaskDto): Task {
@@ -81,6 +86,7 @@ export class TasksService {
   // d
 
   deleteTask(id: string): void {
-    this.tasks = this.tasks.filter((task) => task.id !== id); //proses remove
+    const onetask = this.viewTask(id);
+    this.tasks = this.tasks.filter((task) => task.id !== onetask.id); //proses remove
   }
 }

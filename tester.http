@@ -47,12 +47,12 @@ GET http://localhost:3000/tasks/b4988d37-85e6-41a1-a9ae-629ea1be0d5c
 Accept: application/json
 
 ###
-PATCH http://localhost:3000/tasks/d06124bb-3e3e-4b86-a934-d1256cf1b624/status
+PATCH http://localhost:3000/tasks/765477cc-93a9-456e-b21b-e96784399a55/status
 Accept: application/json
 Content-Type: application/json
 
 {
-  "taskStatus": "DONE"
+  "status": "DONE"
 }
 
 ###
@@ -61,5 +61,5 @@ Accept: application/json
 
 
 ### with filter
-GET http://localhost:3000/tasks?status=OPEN&search=soap
+GET http://localhost:3000/tasks?status=DONE&search=s
 Accept: application/json
