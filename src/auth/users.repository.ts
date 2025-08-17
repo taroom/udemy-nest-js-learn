@@ -7,6 +7,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { JwtPayload } from './jwt-payload.interface';
 
 export class UsersRepository extends Repository<User> {
   constructor(private dataSource: DataSource) {
@@ -32,11 +33,12 @@ export class UsersRepository extends Repository<User> {
     }
   }
 
-  async getUser(authCredentialsDto: AuthCredentialsDto): Promise<string> {
+  async getUser(authCredentialsDto: AuthCredentialsDto): Promise<JwtPayload> {
     const { username, password } = authCredentialsDto;
     const user = await this.findOneBy({ username });
     if (user && (await bcrypt.compare(password, user.password))) {
-      return 'success';
+      const payload: JwtPayload = { username }; //use interface JwtPayload for type safety
+      return payload;
     } else {
       throw new UnauthorizedException(`Please check your login credentials`);
     }
