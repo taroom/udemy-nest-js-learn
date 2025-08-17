@@ -1,3 +1,18 @@
+### AUTH
+POST http://localhost:3000/auth/sign-up
+Accept: application/json
+Content-Type: application/json
+
+{
+  "username": "taroom",
+  "password": "enteraja"
+}
+
+
+
+
+
+
 ###
 GET http://localhost:3000/tasks
 Accept: application/json
