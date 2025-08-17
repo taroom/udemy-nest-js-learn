@@ -1,5 +1,5 @@
 @hostAuth = http://localhost:3000/auth
-@hostTask = http://localhost:3000/task
+@hostTask = http://localhost:3000/tasks
 @user_name = agustaroom
 @user_password = Enteraj4!
 ### AUTH
@@ -30,6 +30,7 @@ Content-Type: application/json
 ###
 GET {{hostTask}}
 Accept: application/json
+Authorization: BEARER {{token}}
 
 ### empty post body on create
 POST {{hostTask}}
