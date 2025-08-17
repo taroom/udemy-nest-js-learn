@@ -8,6 +8,16 @@ Content-Type: application/json
   "password": "Enteraj4!"
 }
 
+###
+POST http://localhost:3000/auth/sign-in
+Accept: application/json
+Content-Type: application/json
+
+{
+  "username": "taroom3",
+  "password": "Enteraj4!"
+}
+
 
 ###
 GET http://localhost:3000/tasks

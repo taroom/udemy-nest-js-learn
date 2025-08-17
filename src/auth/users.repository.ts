@@ -1,7 +1,11 @@
 import { DataSource, Repository } from 'typeorm';
 import { User } from './user.entity';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
-import { ConflictException, InternalServerErrorException } from '@nestjs/common';
+import {
+  ConflictException,
+  InternalServerErrorException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 
 export class UsersRepository extends Repository<User> {
@@ -25,6 +29,16 @@ export class UsersRepository extends Repository<User> {
       } else {
         throw new InternalServerErrorException('who knows??');
       }
+    }
+  }
+
+  async getUser(authCredentialsDto: AuthCredentialsDto): Promise<string> {
+    const { username, password } = authCredentialsDto;
+    const user = await this.findOneBy({ username });
+    if (user && (await bcrypt.compare(password, user.password))) {
+      return 'success';
+    } else {
+      throw new UnauthorizedException(`Please check your login credentials`);
     }
   }
 }
