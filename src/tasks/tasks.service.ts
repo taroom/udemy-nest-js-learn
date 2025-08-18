@@ -59,9 +59,7 @@ export class TasksService {
   }
 
   async deleteTask(id: string, user: User): Promise<void> {
-    const taskChecking: Task = await this.viewTask(id, user);
-
-    const result = await this.tasksRepository.delete({ id });
+    const result = await this.tasksRepository.delete({ id, user });
 
     if (result.affected == 0)
       throw new NotFoundException(`Tidak ditemukan tugas dengan id: "${id}" `);
