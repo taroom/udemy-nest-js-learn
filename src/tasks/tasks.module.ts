@@ -7,9 +7,11 @@ import { TasksRepository } from './tasks.repository';
 import { DataSource } from 'typeorm';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
+    AuthModule,
     TypeOrmModule.forFeature([Task]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
@@ -32,4 +34,4 @@ import { PassportModule } from '@nestjs/passport';
   ],
   exports: [TasksService],
 })
-export class TasksModule {}
+export class TasksModule { }

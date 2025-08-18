@@ -36,10 +36,11 @@ Authorization: BEARER {{token}}
 POST {{hostTask}}
 Accept: application/json
 Content-Type: application/json
+Authorization: BEARER {{token}}
 
 {
   "title": "a",
-  "description": ""
+  "description": "saa"
 }
 
 ###
