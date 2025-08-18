@@ -42,27 +42,38 @@ export class TasksController {
   }
 
   @Get('/:id')
-  viewTaskById(@Param('id') id: string): Promise<Task> {
-    return this.taskService.viewTask(id);
+  viewTaskById(
+    @GetUser() user: User,
+    @Param('id') id: string
+  ): Promise<Task> {
+    return this.taskService.viewTask(id, user);
   }
 
   @Put('/:id')
-  updateTask(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto): Promise<Task> {
+  updateTask(
+    @GetUser() user: User,
+    @Param('id') id: string,
+    @Body() updateTaskDto: UpdateTaskDto
+  ): Promise<Task> {
     updateTaskDto.id = id;
-    return this.taskService.updateTask(updateTaskDto);
+    return this.taskService.updateTask(updateTaskDto, user);
   }
 
   @Patch('/:id/status')
   async updateTaskStatus(
+    @GetUser() user: User,
     @Param('id') id: string,
     @Body() updateTaskStatusDto: UpdateTaskStatusDto,
   ): Promise<Task> {
     const { status } = updateTaskStatusDto;
-    return this.taskService.updateTaskStatus(id, status);
+    return this.taskService.updateTaskStatus(id, status, user);
   }
 
   @Delete('/:id')
-  removeTask(@Param('id') id: string): Promise<void> {
-    return this.taskService.deleteTask(id);
+  removeTask(
+    @GetUser() user: User,
+    @Param('id') id: string
+  ): Promise<void> {
+    return this.taskService.deleteTask(id, user);
   }
 }

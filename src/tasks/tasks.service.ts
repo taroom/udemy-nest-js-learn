@@ -19,17 +19,19 @@ export class TasksService {
     return this.tasksRepository.createTask(createTaskDto, user);
   }
 
-  async viewTask(id: string): Promise<Task> {
-    const found = await this.tasksRepository.findOne({ where: { id } });
+  async viewTask(id: string, user: User): Promise<Task> {
+    const found = await this.tasksRepository.findOne({ where: { id, user } });
+
     // jika tidak ada maka lemparkan exception 404
     if (!found) throw new NotFoundException(`Tidak ditemukan tugas dengan id: "${id}" `);
+
     return found;
   }
 
-  async updateTask(updateTaskDto: UpdateTaskDto): Promise<Task> {
+  async updateTask(updateTaskDto: UpdateTaskDto, user: User): Promise<Task> {
     const { title, description, id, taskStatus } = updateTaskDto;
 
-    const taskUpdating: Task = await this.viewTask(id);
+    const taskUpdating: Task = await this.viewTask(id, user);
 
     if (title) {
       taskUpdating.title = title;
@@ -48,36 +50,18 @@ export class TasksService {
     return taskUpdating;
   }
 
-  // updateTask(updateTaskDto: UpdateTaskDto): Task {
-  //   const { id, title, description, taskStatus } = updateTaskDto;
-  //   const taskUpdating: Task = this.viewTask(id);
-  //   if (title) {
-  //     taskUpdating.title = title;
-  //   }
-
-  //   if (description) {
-  //     taskUpdating.description = description;
-  //   }
-
-  //   if (taskStatus) {
-  //     taskUpdating.status = taskStatus;
-  //   }
-
-  //   this.deleteTask(id);
-  //   this.tasks.push(taskUpdating);
-  //   return taskUpdating;
-  // }
-
-  async updateTaskStatus(id: string, taskStatus: TaskStatus): Promise<Task> {
-    const taskUpdating: Task = await this.viewTask(id);
+  async updateTaskStatus(id: string, taskStatus: TaskStatus, user: User): Promise<Task> {
+    const taskUpdating: Task = await this.viewTask(id, user);
     taskUpdating.status = taskStatus;
     await this.tasksRepository.save(taskUpdating);
 
     return taskUpdating;
   }
 
-  async deleteTask(id: string): Promise<void> {
-    const result = await this.tasksRepository.delete({ id: id });
+  async deleteTask(id: string, user: User): Promise<void> {
+    const taskChecking: Task = await this.viewTask(id, user);
+
+    const result = await this.tasksRepository.delete({ id });
 
     if (result.affected == 0)
       throw new NotFoundException(`Tidak ditemukan tugas dengan id: "${id}" `);

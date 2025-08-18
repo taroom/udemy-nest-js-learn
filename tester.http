@@ -1,6 +1,6 @@
 @hostAuth = http://localhost:3000/auth
 @hostTask = http://localhost:3000/tasks
-@user_name = agustaroom
+@user_name = agussutarom
 @user_password = Enteraj4!
 ### AUTH
 POST {{hostAuth}}/sign-up
@@ -39,14 +39,15 @@ Content-Type: application/json
 Authorization: BEARER {{token}}
 
 {
-  "title": "a",
-  "description": "saa"
+  "title": "guitar hero",
+  "description": "playing"
 }
 
 ###
 POST {{hostTask}}
 Accept: application/json
 Content-Type: application/json
+Authorization: BEARER {{token}}
 
 {
   "title": "Pekerjaan Rumah",
@@ -57,6 +58,7 @@ Content-Type: application/json
 POST {{hostTask}}
 Accept: application/json
 Content-Type: application/json
+Authorization: BEARER {{token}}
 
 {
   "title": "Pekerjaan Sekolah",
@@ -64,44 +66,72 @@ Content-Type: application/json
 }
 
 ###
+# @name postTask
 POST {{hostTask}}
 Accept: application/json
 Content-Type: application/json
+Authorization: BEARER {{token}}
 
 {
-  "title": "Pekerjaan Kantor",
+  "title": "Pekerjaan Kantor Baru",
   "description": "Mengerjakan berbagai hidup pekerjaan Kantor"
 }
 
 ###
-GET {{hostTask}}/a1892a3b-4878-477a-a75b-fddc0c3f69f5
-Accept: application/json
-
+@lastId = {{ postTask.response.body.id }}
 
 ###
-PUT {{hostTask}}/bfe5571e-301d-4ebe-93a4-d8007d75d6b5
+GET {{hostTask}}/{{lastId}}
+Accept: application/json
+Authorization: BEARER {{token}}
+
+###
+PUT {{hostTask}}/{{lastId}}
 Accept: application/json
 Content-Type: application/json
+Authorization: BEARER {{token}}
 
 {
-  "title": "Update",
+  "title": "Update Baru",
   "description": "Mengerjakan berbagai hidup pekerjaan update"
 }
 
 ###
-PATCH {{hostTask}}/bfe5571e-301d-4ebe-93a4-d8007d75d6b5/status
+PATCH {{hostTask}}/{{lastId}}/status
 Accept: application/json
 Content-Type: application/json
+Authorization: BEARER {{token}}
 
 {
   "status": "DONE"
 }
 
 ###
-DELETE {{hostTask}}/dcc9ebbb-53da-440c-a137-b70b1ad43950
+DELETE {{hostTask}}/{{lastId}}
 Accept: application/json
+Authorization: BEARER {{token}}
 
+### cross hack to other user task, view by id mode
+GET {{hostTask}}/2e656ba0-0157-405a-aa4d-4c0c788ebe48
+Accept: application/json
+Authorization: BEARER {{token}}
+
+### cross hack to other user task, patch mode
+PATCH {{hostTask}}/2e656ba0-0157-405a-aa4d-4c0c788ebe48/status
+Accept: application/json
+Content-Type: application/json
+Authorization: BEARER {{token}}
+
+{
+  "status": "DONE"
+}
+
+### cross hack to other user task, delete mode
+DELETE {{hostTask}}/2e656ba0-0157-405a-aa4d-4c0c788ebe48
+Accept: application/json
+Authorization: BEARER {{token}}
 
 ### with filter
-GET {{hostTask}}?status=DONE&search=sekolah
+GET {{hostTask}}?status=OPEN&search=a
 Accept: application/json
+Authorization: BEARER {{token}}
